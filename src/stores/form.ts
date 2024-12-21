@@ -10,6 +10,7 @@ interface UserRecord {
 }
 
 interface FormData {
+  id: number
   tags: string
   recordType: string
   login: string
@@ -17,14 +18,26 @@ interface FormData {
 }
 
 export const useFormStore = defineStore('formData', () => {
-  const formState = reactive({
-    tags: '',
-    recordType: 'ldap',
-    login: '',
-    password: '',
-  }) as FormData
-  const id = ref(0)
+  const formState = reactive([
+    {
+      id: 0,
+      tags: '',
+      recordType: 'ldap',
+      login: '',
+      password: '',
+    },
+  ]) as FormData[]
+  const id = ref(1)
   const data = reactive([]) as UserRecord[]
+  const newRecord = computed(() =>(
+    {
+      id: id.value,
+      tags: '',
+      recordType: 'ldap',
+      login: '',
+      password: '',
+    } as FormData
+  ))
   const recordTypeSuggestions = [
     {
       name: 'LDAP',
@@ -50,10 +63,17 @@ export const useFormStore = defineStore('formData', () => {
 
   // Validators
 
-  const isPasswordRequired = computed(() => formState.recordType === 'local')
+  const isPasswordRequired = computed(() => ((id: number) => {
+    const findIndex = formState.findIndex((record) => record.id === id)
+    if(findIndex > -1) {
+      return formState[findIndex].recordType === 'local'
+    }else{
+      console.log(`isPasswordRequired - Error, ID doesnt exist in state`)
+    }
+  }))
 
   const checkValidRecordType = (recordType: string) =>
-    recordType === 'LDAP' || recordType === 'Локальная'
+    recordType === 'ldap' || recordType === 'local'
   const checkValidLogin = (login: string) => login.length > 0 && login.length < 100
   const checkValidPassword = (password: string) => password.length < 100
 
@@ -73,16 +93,24 @@ export const useFormStore = defineStore('formData', () => {
       password: formState.password,
     } as unknown as UserRecord)
   }
+
+
+  const addRecord = () =>  {
+    formState.push(newRecord.value)
+    id.value++
+  }
+
   const deleteRecord = (record_id: number) => {
-    const index = data.findIndex((record) => record.id === record_id)
+    const index = formState.findIndex((record) => record.id === record_id)
     if (index > -1) {
-      data.splice(index, 1)
+      formState.splice(index, 1)
       console.log(`Успешно удалено`)
     } else {
       console.error(`Запись не найдена`)
     }
   }
   return {
+    addRecord,
     formState,
     formFieldsValid,
     isFormValid,
@@ -91,42 +119,4 @@ export const useFormStore = defineStore('formData', () => {
     isPasswordRequired,
     recordTypeSuggestions,
   }
-
-  // state: () => ({
-  //   data: [] as UserRecord[],
-  //   formState: {} as FormData,
-  // }),
-  // getters: {
-  //   isFormValid(): boolean {
-  //     return Object.values(this.formFieldsValid).every((value) => value)
-  //   },
-  //   formFieldsValid(state) {
-  //     return {
-  //       tags: true,
-  //       recordType: true,
-  //       login: true,
-  //       password: true,
-  //     }
-  //   },
-  // },
-  // actions: {
-  //   deleteRecord(record_id: number) {
-  //     const index = this.data.findIndex((record) => record.id === record_id)
-  //     if (index > -1) {
-  //       this.data.splice(index, 1)
-  //       console.log(`Успешно удалено`)
-  //     } else {
-  //       console.error(`Запись не найдена`)
-  //     }
-  //   },
-  //   addRecord() {
-  //     const emptyRecord: FormData = {
-  //       tags: '',
-  //       recordType: 'LDAP',
-  //       login: '',
-  //       password: '',
-  //     }
-  //     this.data.push(emptyRecord as FormData)
-  //   },
-  // },
 })

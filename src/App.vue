@@ -11,7 +11,9 @@ import { computed } from 'vue'
 
 const store = useFormStore()
 
-const gridClass = computed(() => store.isPasswordRequired ? 'fourFields' : 'threeFields')
+const gridClass = computed(() => (id: number) => {
+ return store.isPasswordRequired(id) ? 'fourFields' : 'threeFields'
+})
 
 </script>
 
@@ -19,7 +21,7 @@ const gridClass = computed(() => store.isPasswordRequired ? 'fourFields' : 'thre
   <div class="wrapper">
     <div class="header">
       <h1>Учетные записи</h1>
-      <p-button variant="outlined" class="add-button">+</p-button>
+      <p-button @click="store.addRecord" variant="outlined" class="add-button">+</p-button>
     </div>
     <p-message severity="secondary" class="message"
     >Для указания нескольких меток для одной пары логин/пароль используйте разделитель ;
@@ -32,41 +34,18 @@ const gridClass = computed(() => store.isPasswordRequired ? 'fourFields' : 'thre
         <label>Логин</label>
         <label>Пароль</label>
       </div>
-      <div class="form-item" :class="gridClass">
-        <p-input-text placeholder="Значение" v-model="store.formState.tags"/>
+
+      <div v-for="item in store.formState" :key="item.id" class="form-item" :class="gridClass(item.id)">
+        <p-input-text placeholder="Значение" v-model="item.tags"/>
         <P-Select
-          v-model="store.formState.recordType"
+          v-model="item.recordType"
           :options="store.recordTypeSuggestions"
           option-label="name"
           option-value="code"
         />
-        <P-InputText placeholder="Значение" v-model="store.formState.login" />
-        <p-password v-if="store.isPasswordRequired" v-model="store.formState.password" toggle-mask />
-        <p-button variant="outlined">Del</p-button>
-      </div>
-      <div class="form-item" :class="gridClass">
-        <p-input-text placeholder="Значение" v-model="store.formState.tags"/>
-        <P-Select
-          v-model="store.formState.recordType"
-          :options="store.recordTypeSuggestions"
-          option-label="name"
-          option-value="code"
-        />
-        <P-InputText placeholder="Значение" v-model="store.formState.login" />
-        <p-password v-if="store.isPasswordRequired" v-model="store.formState.password" toggle-mask />
-        <p-button variant="outlined">Del</p-button>
-      </div>
-      <div class="form-item" :class="gridClass">
-        <p-input-text placeholder="Значение" v-model="store.formState.tags"/>
-        <P-Select
-          v-model="store.formState.recordType"
-          :options="store.recordTypeSuggestions"
-          option-label="name"
-          option-value="code"
-        />
-        <P-InputText placeholder="Значение" v-model="store.formState.login" />
-        <p-password v-if="store.isPasswordRequired" v-model="store.formState.password" toggle-mask />
-        <p-button variant="outlined">Del</p-button>
+        <P-InputText placeholder="Значение" v-model="item.login" />
+        <p-password v-if="store.isPasswordRequired(item.id)" v-model="item.password" toggle-mask />
+        <p-button @click="store.deleteRecord(item.id)" variant="outlined">Del</p-button>
       </div>
     </div>
   </div>
