@@ -34,8 +34,10 @@ IDE:
 
 ### Техническое задание
 
-**Тестовое задание для Vue Frontend Developer**
+https://docs.google.com/document/d/1sOLmhOWItVELDHl4AQ75PrzfByj5uK02uH2QMjQ0xuM/edit?tab=t.0  
 
+
+**Тестовое задание для Vue Frontend Developer**
 Необходимо реализовать форму управления учетными записями.
 
 Время на выполнение задания, максимум 2 дня.
