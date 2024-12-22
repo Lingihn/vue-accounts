@@ -50,7 +50,7 @@ export const useFormStore = defineStore('formData', () => {
     if (findIndex > -1) {
       return formState[findIndex].recordType === 'local'
     } else {
-      console.log(`isPasswordRequired - Error, ID doesnt exist in state`)
+      console.error(`isPasswordRequired - Error, ID doesnt exist in state`)
     }
   })
 
@@ -66,7 +66,7 @@ export const useFormStore = defineStore('formData', () => {
       formState.splice(index, 1)
       rowsValid.value.splice(index, 1)
     } else {
-      console.error(`Запись не найдена`)
+      console.error(`deleteRecord - Error, ID doesnt exist in state`)
     }
   }
   return {
