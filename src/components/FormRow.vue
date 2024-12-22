@@ -67,22 +67,22 @@ watch(model_recordType, () => {
 // Validators
 const checkValidTags = (tags: string) => {
   tagsErrors.value = []
-  if (tags.length && tags.trim().length > 50) {
+  if (tags.length && tags.length > 50) {
     tagsErrors.value.push('Введите < 50 символов' as never)
   }
 }
 const checkValidPassword = (password: string) => {
   passwordErrors.value = []
-  if (password.trim().length > 100) {
+  if (password.length > 100) {
     passwordErrors.value.push('Введите < 100 символов' as never)
   }
 }
 const checkValidLogin = (login: string) => {
   loginErrors.value = []
-  if (!login.trim().length) {
+  if (!login.length) {
     loginErrors.value.push('Обязательно для заполнения' as never)
   }
-  if (login.trim().length > 100) {
+  if (login.length > 100) {
     loginErrors.value.push('Введите < 100 символов' as never)
   }
 }
@@ -137,7 +137,7 @@ const onBlurTags = (event: FocusEvent) => {
     :invalid="!!loginErrors.length"
     v-tooltip.bottom="loginErrors.join(',')"
     placeholder="Значение"
-    v-model="model_login"
+    v-model.trim="model_login"
   />
   <p-password
     v-if="store.isPasswordRequired(model_id as number)"
@@ -145,7 +145,7 @@ const onBlurTags = (event: FocusEvent) => {
     @focus="onFocusPassword"
     :invalid="!!passwordErrors.length"
     v-tooltip.bottom="passwordErrors.join(',')"
-    v-model="model_password"
+    v-model.trim="model_password"
     toggle-mask
   />
   <p-button @click="store.deleteRecord(model_id as number)" variant="outlined">
