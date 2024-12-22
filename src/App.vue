@@ -40,7 +40,7 @@ const gridClass = computed(() => (id: number) => {
       >
         <FormRow
           v-model:id="item.id"
-          v-model:tags="item.tags"
+          v-model:tags.split="item.tags"
           v-model:recordType="item.recordType"
           v-model:login="item.login"
           v-model:password="item.password"
