@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useFormStore } from '@/stores/form.ts'
 import {
   Button as PButton,
@@ -33,6 +33,14 @@ const passwordFieldTouched = ref(false)
 const loginErrors = ref([])
 const tagsErrors = ref([])
 const passwordErrors = ref([])
+const anyErrors = computed(() => {
+  return loginErrors.value.length > 0 ||
+    tagsErrors.value.length > 0 || passwordErrors.value.length > 0
+})
+watch(anyErrors, () => {
+  const index = store.formState.findIndex((item) => item.id === model_id.value)
+  store.rowsValid[index] = !anyErrors.value;
+})
 
 // Validators
 const checkValidTags = (tags: string) => {
