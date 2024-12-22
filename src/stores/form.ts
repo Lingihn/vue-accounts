@@ -19,7 +19,7 @@ export const useFormStore = defineStore('formData', () => {
       {
         id: 0,
         tags: '',
-        recordType: 'ldap',
+        recordType: 'local',
         login: '',
         password: '',
       },
@@ -32,7 +32,7 @@ export const useFormStore = defineStore('formData', () => {
       ({
         id: id.value,
         tags: '',
-        recordType: 'ldap',
+        recordType: 'local',
         login: '',
         password: '',
       }) as FormData,
