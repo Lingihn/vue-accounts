@@ -23,7 +23,6 @@ const recordTypeSuggestions = [
 const model_id = defineModel('id')
 const [model_tags, modifier] = defineModel('tags', {
   set(value) {
-    console.log(`value - set`, value)
     if (modifier.split) {
       const array = value.split(';')
       return array.map((item) => ({ text: item.trim() }))
@@ -31,7 +30,6 @@ const [model_tags, modifier] = defineModel('tags', {
     return value
   },
   get(value) {
-    console.log(`value - get`, value)
     if (modifier.split) {
       if (Array.isArray(value)) {
         return value.map((item) => item.text).join('; ')
