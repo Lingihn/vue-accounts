@@ -1,45 +1,78 @@
-# vue-accounts
+### Мануал
 
-This template should help get you started developing with Vue 3 in Vite.
+Задача выполнена на главном экране, без применения роутинга.  
+Для хранения данных после перезагрузки - использовал localStorage с ключом form_data.  
 
-## Recommended IDE Setup
+Код расположен в следующих местах:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- src/main.ts - Настройка PrimeVue, темы.
+- src/App.vue - Родительский компонент.
+- src/stores/form.ts - Pinia-стор для задачи.
+- src/components/FormRow.vue - Дочерний компонент. Строки для списка учетных записей.
 
-## Type Support for `.vue` Imports in TS
+### Стек
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+Используемые зависимости:
 
-## Customize configuration
+- TypeScript
+- Vue.JS 3, Composition API
+- Pinia
+- PrimeVue, PrimeIcons
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Dev:
 
-## Project Setup
+- Eslint, Prettier, Vite
 
-```sh
-npm install
-```
+IDE:
 
-### Compile and Hot-Reload for Development
+- Webstorm
 
-```sh
-npm run dev
-```
+### Запуск
 
-### Type-Check, Compile and Minify for Production
+1. npm install
+2. npm run dev
 
-```sh
-npm run build
-```
+### Техническое задание
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+**Тестовое задание для Vue Frontend Developer**
 
-```sh
-npm run test:unit
-```
+Необходимо реализовать форму управления учетными записями.
 
-### Lint with [ESLint](https://eslint.org/)
+Время на выполнение задания, максимум 2 дня.
 
-```sh
-npm run lint
-```
+Результатом выполнения работы, является ссылка на github/gitlab репозиторий с историей коммитов.
+
+Макет представлен для примера, главное соблюдать тз, структуру и расположение полей, визуальное отображение можно сделать по своему предпочтению.
+
+https://lh7-rt.googleusercontent.com/docsz/AD_4nXd4bYYH1VZdRp2salOkFcDcIXkwYFa0kqrm9zau9A8rO6NIUnSEKeL-XxLpRwc7n6pGnDEqA8Nrnxbh5L0GC1SZegyyYo_minWxS218LWP2mfujUqUmyuO4iE3-9hZd9UEkogiogg?key=FrzfW-oaPU8IyecO3AagdPSQ
+
+Стек:
+
+1. Vue.js 3 + Composition API (фреймворк)
+2. TypeScript (язык)
+3. Pinia (стейт менеджер)
+4. Любой UI фреймворк на выбор.
+
+Форма состоит из:
+
+1. Заголовка и кнопки добавления учетной записи.
+2. Подсказки для поля метка.
+3. Списка учетных записей с лейблами полей.
+
+Учетная запись состоит из:
+
+1. Метка - Необязательное поле к заполнению. Максимум 50 символов. В поле вводятся текстовые метки, через знак ;
+2. Тип записи - Выпадающий список. Допускаются выборы из заранее предопределенных вариантов:
+- **LDAP** - При выборе этого типа - поле **"Пароль"** скрывается и сохраняется как null
+- **Локальная** - При выборе этого типа - поле **"Пароль"** показывается и сохраняется как введенное значение
+1. Логин - Обязательное к заполнению. Максимум 100 символов
+2. **Пароль -** Обязательное к заполнению. Отображается в случае выбора значения **"Локальная**" в поле **"Тип записи"**. Максимум 100 символов
+3. Кнопки удаления учетной записи.
+
+Логика работы формы:
+
+1. По нажатию кнопки "+" в конец списка учетных записей, добавляется новая пустая запись, **состоящая из: Метки, Типа записи, Логина, Пароля.**
+2. При нажатии кнопки удаления, учетная запись должна полностью удалиться.
+3. По окончанию ввода значений в поля учетной записи (для текстовых - потеря фокуса, для селекта - изменение значения), происходит валидация обязательных полей. В случае валидности - учетная запись сохраняется/обновляется, в обратном, поля обозначаются красной обводкой.
+4. Все поля сохраняются в текстовом виде, кроме поле **Метка**. Оно должно преобразовываться в массив, где один элемент это строковое значение до ;. В массиве должен лежать объект, где поле text равно одному элементу метки - ({ text: элемент метки })
+5. Сохранение учетной записи должно происходить в стейт менеджер. При обновлении страницы, сохраненные учетные записи должны отображаться.
