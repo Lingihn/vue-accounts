@@ -38,16 +38,6 @@ export const useFormStore = defineStore('formData', () => {
       password: '',
     } as FormData
   ))
-  const recordTypeSuggestions = [
-    {
-      name: 'LDAP',
-      code: 'ldap',
-    },
-    {
-      name: 'Локальная',
-      code: 'local',
-    },
-  ]
 
   const formFieldsValid = computed(() => {
     return {
@@ -71,11 +61,6 @@ export const useFormStore = defineStore('formData', () => {
       console.log(`isPasswordRequired - Error, ID doesnt exist in state`)
     }
   }))
-
-  const checkValidRecordType = (recordType: string) =>
-    recordType === 'ldap' || recordType === 'local'
-  const checkValidLogin = (login: string) => login.length > 0 && login.length < 100
-  const checkValidPassword = (password: string) => password.length < 100
 
   const convertTagsField = (data: string) => {
     const arrayData = data.trim().split(';')
@@ -117,6 +102,5 @@ export const useFormStore = defineStore('formData', () => {
     deleteRecord,
     saveRecord,
     isPasswordRequired,
-    recordTypeSuggestions,
   }
 })

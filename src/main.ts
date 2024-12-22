@@ -9,7 +9,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import { Button, InputText, Message, Password, Select } from 'primevue'
+import { Button, InputText, Message, Password, Select, Tooltip } from 'primevue'
 
 const app = createApp(App)
 
@@ -25,5 +25,6 @@ app.component("P-Password", Password)
 app.component("P-InputText", InputText)
 app.component("P-Select", Select)
 app.component('P-Message',Message)
+app.directive('tooltip', Tooltip);
 
 app.mount('#app')
