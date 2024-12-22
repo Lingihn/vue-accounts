@@ -38,7 +38,8 @@ export const useFormStore = defineStore('formData', () => {
       }) as FormData,
   )
   watchEffect(() => {
-    const storageData = reactive(JSON.parse(localStorage.getItem(STORAGE_KEY)))
+    const storageDataRaw = localStorage.getItem(STORAGE_KEY)
+    const storageData = storageDataRaw ? reactive(JSON.parse(storageDataRaw)) : undefined
     const newStorage = formState.map((item, index) => {
       return (rowsValid.value[index]) ? item : storageData[index]
     })
