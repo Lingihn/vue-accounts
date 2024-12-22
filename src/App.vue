@@ -6,6 +6,7 @@ import {
 } from 'primevue'
 import { computed } from 'vue'
 import FormRow from '@/components/FormRow.vue'
+import 'primeicons/primeicons.css'
 
 const store = useFormStore()
 
@@ -18,7 +19,7 @@ const gridClass = computed(() => (id: number) => {
   <div class="wrapper">
     <div class="header">
       <h1>Учетные записи</h1>
-      <p-button @click="store.addRecord" variant="outlined" class="add-button">+</p-button>
+      <p-button @click="store.addRecord" variant="outlined" class="add-button"><span class="pi pi-plus"></span></p-button>
     </div>
     <p-message severity="secondary" class="message"
       >Для указания нескольких меток для одной пары логин/пароль используйте разделитель ;
@@ -90,8 +91,7 @@ const gridClass = computed(() => (id: number) => {
   margin-bottom: 20px;
 
   .add-button {
-    padding: 0 15px;
-    font-weight: bold;
+    padding: 0 10px;
     margin-left: 20px;
   }
 }

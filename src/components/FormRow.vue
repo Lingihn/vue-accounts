@@ -147,6 +147,6 @@ const onBlurTags = (event) => {
     @click="store.deleteRecord(model_id as number)"
     variant="outlined"
   >
-    Del
+    <span class="pi pi-trash"></span>
   </p-button>
 </template>
