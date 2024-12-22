@@ -68,13 +68,13 @@ watch(model_recordType, () => {
 const checkValidTags = (tags: string) => {
   tagsErrors.value = []
   if (tags.length && tags.length > 50) {
-    tagsErrors.value.push('Введите < 50 символов' as never)
+    tagsErrors.value.push('Введите до 50 символов' as never)
   }
 }
 const checkValidPassword = (password: string) => {
   passwordErrors.value = []
   if (password.length > 100) {
-    passwordErrors.value.push('Введите < 100 символов' as never)
+    passwordErrors.value.push('Введите до 100 символов' as never)
   }
 }
 const checkValidLogin = (login: string) => {
@@ -83,7 +83,7 @@ const checkValidLogin = (login: string) => {
     loginErrors.value.push('Обязательно для заполнения' as never)
   }
   if (login.length > 100) {
-    loginErrors.value.push('Введите < 100 символов' as never)
+    loginErrors.value.push('Введите до 100 символов' as never)
   }
 }
 // EventFocus
