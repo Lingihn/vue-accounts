@@ -41,7 +41,7 @@ export const useFormStore = defineStore('formData', () => {
     const storageDataRaw = localStorage.getItem(STORAGE_KEY)
     const storageData = storageDataRaw ? reactive(JSON.parse(storageDataRaw)) : undefined
     const newStorage = formState.map((item, index) => {
-      return (rowsValid.value[index]) ? item : storageData[index]
+      return rowsValid.value[index] ? item : storageData[index]
     })
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newStorage))
   })
