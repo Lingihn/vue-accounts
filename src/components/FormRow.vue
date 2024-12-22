@@ -22,7 +22,7 @@ const recordTypeSuggestions = [
 
 const model_id = defineModel('id')
 const [model_tags, modifier] = defineModel('tags', {
-  set(value) {
+  set(value: string) {
     if (modifier.split) {
       const array = value.split(';')
       return array.map((item) => ({ text: item.trim() }))
@@ -42,7 +42,7 @@ const [model_tags, modifier] = defineModel('tags', {
 })
 const model_recordType = defineModel('recordType')
 const model_login = defineModel('login')
-const model_password = defineModel('password')
+const model_password = defineModel<string | null>('password')
 
 const loginFieldTouched = ref(false)
 const tagsFieldTouched = ref(false)
@@ -87,29 +87,32 @@ const checkValidLogin = (login: string) => {
   }
 }
 // EventFocus
-const onFocusLogin = (event) => {
+const onFocusLogin = () => {
   loginFieldTouched.value = true
 }
-const onFocusPassword = (event) => {
+const onFocusPassword = () => {
   passwordFieldTouched.value = true
 }
-const onFocusTags = (event) => {
+const onFocusTags = () => {
   tagsFieldTouched.value = true
 }
 // EventBlur
-const onBlurLogin = (event) => {
+const onBlurLogin = (event: FocusEvent) => {
   if (loginFieldTouched.value) {
-    checkValidLogin(event.target.value)
+    const input = event.target as HTMLInputElement
+    checkValidLogin(input.value)
   }
 }
-const onBlurPassword = (event) => {
+const onBlurPassword = (event: FocusEvent) => {
   if (passwordFieldTouched.value) {
-    checkValidPassword(event.target.value)
+    const input = event.target as HTMLInputElement
+    checkValidPassword(input.value)
   }
 }
-const onBlurTags = (event) => {
+const onBlurTags = (event: FocusEvent) => {
   if (tagsFieldTouched.value) {
-    checkValidTags(event.target.value)
+    const input = event.target as HTMLInputElement
+    checkValidTags(input.value)
   }
 }
 </script>
