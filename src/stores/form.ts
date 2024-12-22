@@ -78,22 +78,22 @@ export const useFormStore = defineStore('formData', () => {
     }
   })
 
-  const convertTagsField = (data: string) => {
-    const arrayData = data.trim().split(';')
-    return arrayData.map((item) => ({ text: item.trim() }))
-  }
+  // const convertTagsField = (data: string) => {
+  //   const arrayData = data.trim().split(';')
+  //   return arrayData.map((item) => ({ text: item.trim() }))
+  // }
 
   // Actions
-  const saveRecord = (record: FormData) => {
-    if (!isFormValid) console.log(`Данные не записаны, форма не валидна`)
-    data.push({
-      id: id.value++,
-      tags: convertTagsField(formState.tags),
-      recordType: formState.recordType,
-      login: formState.login,
-      password: formState.password,
-    } as unknown as UserRecord)
-  }
+  // const saveRecord = (record: FormData) => {
+  //   if (!isFormValid) console.log(`Данные не записаны, форма не валидна`)
+  //   data.push({
+  //     id: id.value++,
+  //     tags: convertTagsField(formState.tags),
+  //     recordType: formState.recordType,
+  //     login: formState.login,
+  //     password: formState.password,
+  //   } as unknown as UserRecord)
+  // }
 
   const addRecord = () => {
     formState.push(newRecord.value)
@@ -118,7 +118,7 @@ export const useFormStore = defineStore('formData', () => {
     // isFormValid,
     deleteRecord,
     rowsValid,
-    saveRecord,
+    // saveRecord,
     isPasswordRequired,
   }
 })

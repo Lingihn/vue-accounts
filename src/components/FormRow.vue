@@ -21,26 +21,26 @@ const recordTypeSuggestions = [
 ]
 
 const model_id = defineModel('id')
-const [model_tags, modifier] = defineModel('tags',{
+const [model_tags, modifier] = defineModel('tags', {
   set(value) {
     console.log(`value - set`, value)
     if (modifier.split) {
       const array = value.split(';')
-      return array.map(item => ({text: item.trim()}))
+      return array.map((item) => ({ text: item.trim() }))
     }
     return value
   },
-  get(value){
+  get(value) {
     console.log(`value - get`, value)
     if (modifier.split) {
-      if(Array.isArray(value)){
-        return value.map(item => (item.text)).join('; ')
-      }else{
+      if (Array.isArray(value)) {
+        return value.map((item) => item.text).join('; ')
+      } else {
         return value
       }
     }
     return value
-  }
+  },
 })
 const model_recordType = defineModel('recordType')
 const model_login = defineModel('login')
@@ -54,12 +54,16 @@ const loginErrors = ref([])
 const tagsErrors = ref([])
 const passwordErrors = ref([])
 const anyErrors = computed(() => {
-  return loginErrors.value.length > 0 ||
-    tagsErrors.value.length > 0 || passwordErrors.value.length > 0
+  return (
+    loginErrors.value.length > 0 || tagsErrors.value.length > 0 || passwordErrors.value.length > 0
+  )
 })
 watch(anyErrors, () => {
   const index = store.formState.findIndex((item) => item.id === model_id.value)
-  store.rowsValid[index] = !anyErrors.value;
+  store.rowsValid[index] = !anyErrors.value
+})
+watch(model_recordType, () => {
+  model_password.value = model_recordType.value === 'ldap' ? null : ''
 })
 
 // Validators
@@ -143,10 +147,7 @@ const onBlurTags = (event) => {
     v-model="model_password"
     toggle-mask
   />
-  <p-button
-    @click="store.deleteRecord(model_id as number)"
-    variant="outlined"
-  >
+  <p-button @click="store.deleteRecord(model_id as number)" variant="outlined">
     <span class="pi pi-trash"></span>
   </p-button>
 </template>
